@@ -2,50 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Test Product</title>
+  <title>Test Store</title>
 
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
       margin: 0;
-      padding: 40px;
-      background: #fafafa;
+      background: #f4f4f4;
       color: #222;
     }
 
-    .page-wrapper {
-      max-width: 900px;
-      margin: 0 auto;
+    /* SITE HEADER */
+    .site-header {
+      background: #111;
+      color: white;
+      padding: 24px 40px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    /* PAGE LAYOUT */
+    .page {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 40px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      height: fit-content;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .sidebar p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* MAIN CONTENT */
+    .content {
       background: white;
       padding: 40px;
       border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     }
 
-    /* Header */
     .product-header h1 {
-      font-size: 34px;
-      margin-bottom: 8px;
+      margin-top: 0;
+      font-size: 32px;
     }
 
     .product-header p {
       color: #666;
-      margin-bottom: 32px;
+      margin-bottom: 30px;
     }
 
-    /* Tabs */
+    /* TABS */
     .tabs {
       margin-top: 40px;
     }
 
     .tab-buttons {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       border-bottom: 1px solid #ddd;
     }
 
     .tab-buttons button {
-      padding: 12px 18px;
+      padding: 12px 0;
       border: none;
       background: none;
       font-size: 16px;
@@ -55,8 +91,8 @@
 
     .tab-buttons button.active {
       border-color: #57b665;
-      font-weight: bold;
       color: #57b665;
+      font-weight: bold;
     }
 
     .tab-content {
@@ -68,51 +104,81 @@
     .tab-content.active {
       display: block;
     }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="page-wrapper">
+  <!-- SITE TITLE / BANNER -->
+  <div class="site-header">
+    Test Store Name
+    <!-- later replace with <img src="banner.png"> -->
+  </div>
 
-    <!-- HEADER -->
-    <div class="product-header">
-      <h1>Test Product</h1>
-      <p>This is a sample product used for layout and checkout testing.</p>
-    </div>
+  <div class="page">
 
-    <!-- SHOPIFY PRODUCT -->
-    <div id='product-component-1769128360167'></div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h3>About Us</h3>
+      <p>
+        We are a small independent company focused on building
+        high-quality products with a clean, simple buying experience.
+      </p>
 
-    <!-- INFO TABS -->
-    <div class="tabs">
-      <div class="tab-buttons">
-        <button class="active" data-tab="details">Details</button>
-        <button data-tab="shipping">Shipping</button>
-        <button data-tab="returns">Returns</button>
+      <h3>Contact</h3>
+      <p>
+        Email: hello@example.com<br>
+        Location: UK
+      </p>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+      <div class="product-header">
+        <h1>Test Product</h1>
+        <p>This is a sample product used for layout and checkout testing.</p>
       </div>
 
-      <div id="details" class="tab-content active">
-        <p>
-          This product is currently a test item used to validate layout,
-          styling, and Shopify checkout functionality.
-        </p>
+      <!-- SHOPIFY PRODUCT -->
+      <div id="product-component-1769128360167"></div>
+
+      <!-- INFO TABS -->
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button class="active" data-tab="details">Details</button>
+          <button data-tab="shipping">Shipping</button>
+          <button data-tab="returns">Returns</button>
+        </div>
+
+        <div id="details" class="tab-content active">
+          <p>
+            This product is currently a test item used to validate layout,
+            styling, and Shopify checkout functionality.
+          </p>
+        </div>
+
+        <div id="shipping" class="tab-content">
+          <p>
+            Orders ship within 1–2 business days.
+          </p>
+        </div>
+
+        <div id="returns" class="tab-content">
+          <p>
+            Returns accepted within 14 days of delivery.
+          </p>
+        </div>
       </div>
 
-      <div id="shipping" class="tab-content">
-        <p>
-          Orders are processed within 1–2 business days.
-          Shipping times may vary depending on location.
-        </p>
-      </div>
-
-      <div id="returns" class="tab-content">
-        <p>
-          Returns are accepted within 14 days of delivery,
-          provided the item is unused.
-        </p>
-      </div>
-    </div>
+    </main>
 
   </div>
 
@@ -129,7 +195,7 @@
     });
   </script>
 
-  <!-- SHOPIFY BUY BUTTON SCRIPT (UNCHANGED FUNCTIONALLY) -->
+  <!-- SHOPIFY BUY BUTTON SCRIPT -->
   <script type="text/javascript">
   /*<![CDATA[*/
   (function () {

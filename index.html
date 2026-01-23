@@ -14,19 +14,26 @@
 
     /* SITE HEADER */
     .site-header {
-      background: #111;
-      color: white;
-      padding: 24px 40px;
-      font-size: 28px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    /* PAGE LAYOUT */
-    .site-header {
       text-align: center;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 20px 40px;
+    }
+
+    .site-header img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* PAGE LAYOUT */
+    .page {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 40px auto;
       padding: 0 40px;
     }
 
@@ -117,8 +124,7 @@
 
   <!-- SITE TITLE / BANNER -->
   <div class="site-header">
-<img src="https://raw.githubusercontent.com/dubresearch/dubresearch.github.io/refs/heads/main/DR_banner_v2.jpg
-" alt="Company Name">
+    <img src="https://raw.githubusercontent.com/dubresearch/dubresearch.github.io/refs/heads/main/DR_banner_v2.jpg" alt="Company Name">
   </div>
 
   <div class="page">

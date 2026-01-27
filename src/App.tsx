@@ -136,6 +136,7 @@ function App() {
                       <TabsTrigger value="specs">Specs</TabsTrigger>
                       <TabsTrigger value="shipping">Shipping</TabsTrigger>
                       <TabsTrigger value="returns">Returns</TabsTrigger>
+                      <TabsTrigger value="downloads">downloads</TabsTrigger>
                     </TabsList>
 
                     <div className="flex items-center gap-4">
@@ -175,17 +176,6 @@ function App() {
                         <li>- Micro-USB powered</li>
                         <li>- 3.5mm stereo output</li>
                       </ul>
-                      <div className="mt-4">
-                        <a
-                          href="/SSS1_UserManual_V1.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
-                        >
-                          <Download className="size-3.5" />
-                          Download User Manual
-                        </a>
-                      </div>
                     </div>
                   </TabsContent>
 
@@ -203,6 +193,20 @@ function App() {
                       <p className="text-foreground font-thin">
                         Returns accepted within 14 days of delivery.
                       </p>
+                    </div>
+                  </TabsContent>
+
+                  <TabsContent value="downloads" className="pt-4">
+                    <div className="px-1">
+                        <a
+                          href="/SSS1_UserManual_V1.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground font-thin"
+                        >
+                          <Download className="size-3.5" />
+                          Download User Manual
+                        </a>
                     </div>
                   </TabsContent>
                 </Tabs>

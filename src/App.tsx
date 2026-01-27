@@ -136,7 +136,7 @@ function App() {
                       <TabsTrigger value="specs">Specs</TabsTrigger>
                       <TabsTrigger value="shipping">Shipping</TabsTrigger>
                       <TabsTrigger value="returns">Returns</TabsTrigger>
-                      <TabsTrigger value="downloads">downloads</TabsTrigger>
+                      <TabsTrigger value="downloads">Downloads</TabsTrigger>
                     </TabsList>
 
                     <div className="flex items-center gap-4">

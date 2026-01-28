@@ -5,8 +5,8 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
-  // For user/org GitHub Pages (username.github.io), base is "/"
-  base: "/",
+  // Use relative base so assets load on GH Pages subpaths.
+  base: "./",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

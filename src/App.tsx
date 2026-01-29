@@ -1,10 +1,12 @@
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { getCheckoutUrl, formatPrice } from "@/lib/shopify";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ProductMedia } from "@/components/ProductMedia";
 import { ProductHeader } from "@/components/ProductHeader";
 import { ProductTabs } from "@/components/ProductTabs";
 import { Footer } from "@/components/Footer";
+import { ShoppingCart } from "lucide-react";
 
 function App() {
   const { product, loading, error } = useShopifyProduct();
@@ -26,10 +28,11 @@ function App() {
 
   return (
     <div className="noise-bg min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-2 py-8">
+      <div className="mx-auto max-w-3xl px-5 mb-8">
+
         {/* Header - mb-20 controls space below header */}
-        <header className="text-center mb-16">
-          <h1 className="font-title text-4xl tracking-wider text-foreground md:text-6xl">
+        <header className="text-center mb-8 mt-8 md:mt-12 md:mb-16">
+          <h1 className="font-title text-4xl tracking-widest text-foreground md:text-6xl">
             DUB RESEARCH
           </h1>
         </header>
@@ -51,7 +54,7 @@ function App() {
             {product && (
               <>
                 <ProductMedia images={product.images} />
-                <div className="mb-2 mt-6">
+                <div className="mb-2 mt-4 md:mb-2 md:mt-6">
                   <ProductHeader
                     title={product.title}
                     price={price}
@@ -59,13 +62,21 @@ function App() {
                   />
                 </div>
                 <ProductTabs descriptionHtml={product.descriptionHtml} />
+                <Button
+                  onClick={handleBuyNow}
+                  size="xl"
+                  className="mt-4 w-full bg-white text-black text-base md:hidden"
+                >
+                  <ShoppingCart data-icon="inline-start" />
+                  Buy Now
+                </Button>
               </>
             )}
 
           {/* Separator - my-x or mt-x / mb-x controls vertical spacing around separator */}
-          <Separator className="mt-8 mb-16" />
+          <Separator className="mt-10 mb-10" />
 
-          <Footer />
+          <Footer/>
         </main>
       </div>
     </div>

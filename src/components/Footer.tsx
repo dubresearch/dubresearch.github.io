@@ -11,10 +11,10 @@ export function Footer() {
 
       <section>
         <h3 className="mb-4 text-base font-semibold text-foreground">Contact</h3>
-        <div className="space-y-1 text-sm font-thin text-foreground">
-          <p>Email: researchdub[at]gmail.com</p>
-          <p>Location: Bristol, UK</p>
-        </div>
+        <p className="text-sm font-thin text-foreground">
+          Email: researchdub[at]gmail.com<br />
+          Location: Bristol, UK
+        </p>
       </section>
     </footer>
   );

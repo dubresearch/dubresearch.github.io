@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className="noise-bg min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-5 mb-8">
+      <div className="mx-auto max-w-3xl px-5 md:px-10 lg:px-0 mb-8">
 
         {/* Header - mb-20 controls space below header */}
         <header className="text-center mb-8 mt-8 md:mt-12 md:mb-16">

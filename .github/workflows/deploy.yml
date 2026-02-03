@@ -34,6 +34,8 @@ jobs:
         env:
           VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
           VITE_SHOPIFY_STORE_DOMAIN: ${{ secrets.VITE_SHOPIFY_STORE_DOMAIN }}
+          VITE_USE_SHOPIFY_CHECKOUT: "false"
+          VITE_BUY_NOW_URL: "https://www.elevatorsound.com/product/dub-research-sound-system-siren/"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -8,13 +8,22 @@ import { ProductTabs } from "@/components/ProductTabs";
 import { Footer } from "@/components/Footer";
 import { ShoppingCart } from "lucide-react";
 
+const BUY_NOW_OVERRIDE_URL = import.meta.env.VITE_BUY_NOW_URL;
+const USE_SHOPIFY_CHECKOUT = import.meta.env.VITE_USE_SHOPIFY_CHECKOUT === "true";
+
 function App() {
   const { product, loading, error } = useShopifyProduct();
 
   const handleBuyNow = () => {
-    if (product && product.variants.length > 0) {
+    if (USE_SHOPIFY_CHECKOUT && product && product.variants.length > 0) {
       const checkoutUrl = getCheckoutUrl(product.variants[0].id);
       window.location.href = checkoutUrl;
+      return;
+    }
+
+    if (BUY_NOW_OVERRIDE_URL) {
+      // Temporary override: redirect Buy Now to non-Shopify URL during exclusivity period.
+      window.location.href = BUY_NOW_OVERRIDE_URL;
     }
   };
 

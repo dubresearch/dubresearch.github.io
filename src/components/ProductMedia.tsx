@@ -98,7 +98,7 @@ function MediaCarousel({
                 src={image.url}
                 alt={getAltText(image, index)}
                 className={cn(
-                  "h-full w-full object-cover object-[center_20%] transition-transform duration-300 scale-110 hover:scale-125",
+                  "h-full w-full object-cover transition-transform duration-300 hover:scale-105",
                   imageClassName
                 )}
               />

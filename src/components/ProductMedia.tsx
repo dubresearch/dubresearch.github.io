@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { ProductImage } from "@/lib/shopify";
+import type { ProductImage } from "@/types/product";
 import {
   Carousel,
   CarouselContent,
@@ -18,7 +18,7 @@ type DisplayImage = {
   key: string;
   url: string;
   urlLarge: string;
-  altText?: string;
+  altText: string;
 };
 
 const DESKTOP_MEDIA_QUERY = "(min-width: 768px)";
@@ -51,12 +51,12 @@ function normalizeImages(images: ProductImage[]): DisplayImage[] {
     key: `${image.url}-${index}`,
     url: image.url,
     urlLarge: image.urlLarge ?? image.url,
-    altText: image.altText ?? undefined,
+    altText: image.altText,
   }));
 }
 
 function getAltText(image: DisplayImage, index: number) {
-  return image.altText?.trim() || `Product image ${index + 1}`;
+  return image.altText.trim() || `Product image ${index + 1}`;
 }
 
 function MediaCarousel({

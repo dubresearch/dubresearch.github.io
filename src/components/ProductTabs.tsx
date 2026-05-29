@@ -6,20 +6,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import type { Product } from "@/types/product";
 import { Download } from "lucide-react";
 
 interface ProductTabsProps {
-  descriptionHtml: string;
+  product: Product;
 }
 
-export function ProductTabs({ descriptionHtml }: ProductTabsProps) {
-  const tabItems = [
-    { value: "description", label: "Description" },
-    { value: "specs", label: "Specs" },
-    { value: "shipping", label: "Shipping" },
-    { value: "returns", label: "Returns" },
-    { value: "downloads", label: "Downloads" },
-  ];
+const tabItems = [
+  { value: "description", label: "Description" },
+  { value: "specs", label: "Specs" },
+  { value: "shipping", label: "Shipping" },
+  { value: "returns", label: "Returns" },
+  { value: "downloads", label: "Downloads" },
+];
+
+export function ProductTabs({ product }: ProductTabsProps) {
   const [activeTab, setActiveTab] = useState("description");
   type AccordionValue = ComponentProps<typeof Accordion>["value"];
   type AccordionOnValueChange = NonNullable<
@@ -38,6 +40,7 @@ export function ProductTabs({ descriptionHtml }: ProductTabsProps) {
       setActiveTab(nextValue);
     }
   };
+
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab}>
       <div className="md:hidden">
@@ -53,54 +56,36 @@ export function ProductTabs({ descriptionHtml }: ProductTabsProps) {
               </AccordionTrigger>
               <AccordionContent className="px-0">
                 {tab.value === "description" && (
-                  <div
-                    className="prose prose-invert prose-sm max-w-none text-foreground font-thin"
-                    dangerouslySetInnerHTML={{
-                      __html: descriptionHtml,
-                    }}
-                  />
+                  <p className="text-foreground font-thin">
+                    {product.description}
+                  </p>
                 )}
 
                 {tab.value === "specs" && (
-                  <ul className="list-inside list-disc space-y-2 text-foreground font-thin">
-                    <li>5 LFO types</li>
-                    <li>4 waveforms</li>
-                    <li>Built in delay</li>
-                    <li>Save presets</li>
-                    <li>Micro-USB powered</li>
-                    <li>3.5mm stereo output</li>
-                  </ul>
+                  <SpecsList specs={product.specs} />
                 )}
 
                 {tab.value === "shipping" && (
                   <p className="text-foreground font-thin">
-                    We are open Tuesday – Friday. Orders ship within 1–2 business
-                    days.
+                    {product.shipping}
                   </p>
                 )}
 
                 {tab.value === "returns" && (
                   <p className="text-foreground font-thin">
-                    Returns accepted within 14 days of delivery.
+                    {product.returns}
                   </p>
                 )}
 
                 {tab.value === "downloads" && (
-                  <a
-                    href="/SSS1_UserManual_V1.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-foreground font-thin underline underline-offset-4 hover:text-muted-foreground"
-                  >
-                    <Download className="size-3.5" />
-                    Download User Manual
-                  </a>
+                  <DownloadsList downloads={product.downloads} />
                 )}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
       </div>
+
       <div className="mb-2 hidden md:flex">
         <TabsList variant="line" className="w-full justify-start">
           {tabItems.map((tab) => (
@@ -112,48 +97,53 @@ export function ProductTabs({ descriptionHtml }: ProductTabsProps) {
       </div>
 
       <TabsContent value="description" className="hidden md:block">
-        <div
-          className="prose prose-invert prose-sm max-w-none text-foreground font-thin"
-          dangerouslySetInnerHTML={{
-            __html: descriptionHtml,
-          }}
-        />
+        <p className="text-foreground font-thin">{product.description}</p>
       </TabsContent>
 
       <TabsContent value="specs" className="hidden md:block">
-        <ul className="list-inside list-disc space-y-2 text-foreground font-thin">
-          <li>5 LFO types</li>
-          <li>4 waveforms</li>
-          <li>Built in delay</li>
-          <li>Save presets</li>
-          <li>Micro-USB powered</li>
-          <li>3.5mm stereo output</li>
-        </ul>
+        <SpecsList specs={product.specs} />
       </TabsContent>
 
       <TabsContent value="shipping" className="hidden md:block min-h-[80px]">
-        <p className="text-foreground font-thin">
-          We are open Tuesday – Friday. Orders ship within 1–2 business days.
-        </p>
+        <p className="text-foreground font-thin">{product.shipping}</p>
       </TabsContent>
 
       <TabsContent value="returns" className="hidden md:block min-h-[80px]">
-        <p className="text-foreground font-thin">
-          Returns accepted within 14 days of delivery.
-        </p>
+        <p className="text-foreground font-thin">{product.returns}</p>
       </TabsContent>
 
       <TabsContent value="downloads" className="hidden md:block min-h-[80px]">
+        <DownloadsList downloads={product.downloads} />
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+function SpecsList({ specs }: { specs: string[] }) {
+  return (
+    <ul className="flex list-inside list-disc flex-col gap-2 text-foreground font-thin">
+      {specs.map((spec) => (
+        <li key={spec}>{spec}</li>
+      ))}
+    </ul>
+  );
+}
+
+function DownloadsList({ downloads }: { downloads: Product["downloads"] }) {
+  return (
+    <div className="flex flex-col gap-2">
+      {downloads.map((download) => (
         <a
-          href="/SSS1_UserManual_V1.pdf"
+          key={download.href}
+          href={download.href}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-sm text-foreground font-thin underline underline-offset-4 hover:text-muted-foreground"
         >
-          <Download className="size-3.5" />
-          Download User Manual
+          <Download data-icon="inline-start" />
+          {download.label}
         </a>
-      </TabsContent>
-    </Tabs>
+      ))}
+    </div>
   );
 }

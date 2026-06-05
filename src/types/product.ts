@@ -9,10 +9,15 @@ export interface ProductDownload {
   href: string;
 }
 
+export interface ProductPurchaseLink {
+  region: string;
+  href: string;
+}
+
 export interface Product {
   title: string;
   price: string;
-  buyUrl?: string;
+  purchaseLinks: ProductPurchaseLink[];
   description: string;
   specs: string[];
   shipping: string;

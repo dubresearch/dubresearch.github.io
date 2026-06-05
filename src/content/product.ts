@@ -40,8 +40,17 @@ const images: ProductImage[] = Object.entries(productImageModules)
 
 export const product: Product = {
   title: "SSS1 'Sound System Siren'",
-  price: "\u00a3159.00",
-  buyUrl: import.meta.env.VITE_BUY_NOW_URL,
+  price: "\u00a3159 / \u20ac189",
+  purchaseLinks: [
+    {
+      region: "UK",
+      href: import.meta.env.VITE_BUY_NOW_URL,
+    },
+    {
+      region: "EU",
+      href: "https://eu.elevatorsound.com/product/dub-research-sound-system-siren/",
+    },
+  ],
   description:
     "The SSS1 is a siren FX machine, an extension on the concept of the original NJD siren inna year 3000 style. Siren sounds can be sculpted, saved, triggered and sent to the built in delay. Whilst traditional siren sounds can easily be sculpted, this device will give you further ability to create new and interesting siren sounds, from soft and delicate, to harsh and destructive. The siren is unashamedly digital in design, but with some analog bits along the way. I hope this siren will continue to keep moving sound system fwd!",
   specs: [

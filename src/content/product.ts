@@ -69,6 +69,14 @@ export const product: Product = {
       label: "Download User Manual",
       href: "/SSS1_UserManual_V1.pdf",
     },
+    ...(__SSS1_FIRMWARE_AVAILABLE__
+      ? [
+          {
+            label: "Download Latest Firmware",
+            href: "/sss1_v2_firmware.uf2",
+          },
+        ]
+      : []),
   ],
   images,
 };

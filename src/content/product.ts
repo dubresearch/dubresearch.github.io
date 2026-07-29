@@ -69,11 +69,19 @@ export const product: Product = {
       label: "Download User Manual",
       href: "/SSS1_UserManual_V1.pdf",
     },
-    ...(__SSS1_FIRMWARE_AVAILABLE__
+    ...(__SSS1_RP2350_FIRMWARE_AVAILABLE__
       ? [
           {
-            label: "Download Latest Firmware",
-            href: "/sss1_v2_firmware.uf2",
+            label: "Download Firmware v2 (RP2350)",
+            href: "/sss1_v2_firmware_RP2350.uf2",
+          },
+        ]
+      : []),
+    ...(__SSS1_RPI_FIRMWARE_AVAILABLE__
+      ? [
+          {
+            label: "Download Firmware v2 (RPI)",
+            href: "/sss1_v2_firmware_RPI.uf2",
           },
         ]
       : []),

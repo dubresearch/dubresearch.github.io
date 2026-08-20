@@ -8,16 +8,22 @@ interface ProductHeaderProps {
   title: string;
   price: string;
   purchaseLinks: ProductPurchaseLink[];
+  actionLabel?: string;
+  menuItemSuffix?: string;
 }
 
 interface ShopRegionMenuProps {
   purchaseLinks: ProductPurchaseLink[];
   mobile?: boolean;
+  label?: string;
+  menuItemSuffix?: string;
 }
 
 export function ShopRegionMenu({
   purchaseLinks,
   mobile = false,
+  label = "Buy from",
+  menuItemSuffix = "store",
 }: ShopRegionMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +74,7 @@ export function ShopRegionMenu({
       >
         <span className={mobile ? "flex items-center gap-2" : "contents"}>
           <ShoppingCart data-icon="inline-start" className="mr-0.5" />
-          <span>Buy from</span>
+          <span>{label}</span>
         </span>
         <ChevronDown
           data-icon="inline-end"
@@ -90,7 +96,7 @@ export function ShopRegionMenu({
                 href={link.href}
                 className="flex items-center justify-between gap-3 border-b border-border/60 px-3 py-2 text-sm last:border-b-0 hover:bg-muted"
               >
-                <span>{link.region} store</span>
+                <span>{[link.region, menuItemSuffix].filter(Boolean).join(" ")}</span>
                 <ExternalLink data-icon="inline-end" className="size-3" />
               </a>
             ))}
@@ -104,7 +110,7 @@ export function ShopRegionMenu({
               href={link.href}
               className="flex items-center justify-between gap-3 border-b border-border/60 px-3 py-2 text-sm last:border-b-0 hover:bg-muted"
             >
-              <span>{link.region} store</span>
+              <span>{[link.region, menuItemSuffix].filter(Boolean).join(" ")}</span>
               <ExternalLink data-icon="inline-end" className="size-3" />
             </a>
           ))}
@@ -114,7 +120,13 @@ export function ShopRegionMenu({
   );
 }
 
-export function ProductHeader({ title, price, purchaseLinks }: ProductHeaderProps) {
+export function ProductHeader({
+  title,
+  price,
+  purchaseLinks,
+  actionLabel,
+  menuItemSuffix,
+}: ProductHeaderProps) {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
       <h2 className="w-full text-left text-xl text-foreground md:w-auto">
@@ -124,7 +136,11 @@ export function ProductHeader({ title, price, purchaseLinks }: ProductHeaderProp
       <div className="flex w-full md:w-auto md:justify-end">
         <div className="inline-flex items-center gap-4">
           <span className="text-sm text-muted-foreground">{price}</span>
-          <ShopRegionMenu purchaseLinks={purchaseLinks} />
+          <ShopRegionMenu
+            purchaseLinks={purchaseLinks}
+            label={actionLabel}
+            menuItemSuffix={menuItemSuffix}
+          />
         </div>
       </div>
     </div>

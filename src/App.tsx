@@ -1,38 +1,38 @@
-import { Separator } from "@/components/ui/separator";
-import { ProductMedia } from "@/components/ProductMedia";
-import { ProductHeader, ShopRegionMenu } from "@/components/ProductHeader";
-import { ProductTabs } from "@/components/ProductTabs";
-import { Footer } from "@/components/Footer";
-import { product } from "@/content/product";
+import { useEffect, useState } from "react";
+import { CatalogueDesign } from "@/components/candidates/CatalogueDesign";
+import { IndexDesign } from "@/components/candidates/IndexDesign";
+import { WorkbenchDesign } from "@/components/candidates/WorkbenchDesign";
+import { DesignSwitcher, type DesignId } from "@/components/DesignSwitcher";
+
+const designComponents: Record<DesignId, typeof CatalogueDesign> = {
+  catalogue: CatalogueDesign,
+  index: IndexDesign,
+  workbench: WorkbenchDesign,
+};
+
+function getInitialDesign(): DesignId {
+  const design = new URLSearchParams(window.location.search).get("design");
+  return design === "index" || design === "workbench" ? design : "catalogue";
+}
 
 function App() {
+  const [design, setDesign] = useState<DesignId>(getInitialDesign);
+  const ActiveDesign = designComponents[design];
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("design", design);
+    window.history.replaceState({}, "", url);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [design]);
+
   return (
-    <div className="noise-bg min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-5 md:px-10 lg:px-0 mb-8">
-        <header className="text-center mb-8 mt-8 md:mt-12 md:mb-16">
-          <h1 className="font-title text-4xl tracking-widest text-foreground md:text-6xl">
-            DUB RESEARCH
-          </h1>
-        </header>
-
-        <main>
-          <ProductMedia images={product.images} />
-          <div className="mb-2 mt-4 md:mb-2 md:mt-6">
-            <ProductHeader
-              title={product.title}
-              price={product.price}
-              purchaseLinks={product.purchaseLinks}
-            />
-          </div>
-          <ProductTabs product={product} />
-          <ShopRegionMenu purchaseLinks={product.purchaseLinks} mobile />
-
-          <Separator className="mt-10 mb-10" />
-
-          <Footer />
-        </main>
+    <>
+      <DesignSwitcher value={design} onValueChange={setDesign} />
+      <div key={design} className="candidate-enter">
+        <ActiveDesign />
       </div>
-    </div>
+    </>
   );
 }
 

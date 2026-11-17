@@ -31,7 +31,7 @@ const rangeProducts: RangeProduct[] = [
     menuItemSuffix: "",
     details: {
       title: "FS2",
-      price: "Coming soon",
+      price: "£189 / €227",
       purchaseLinks: [
         {
           region: "Join the release list",
@@ -56,12 +56,7 @@ const rangeProducts: RangeProduct[] = [
       ],
       shipping: "Launch timing and regional availability will be announced soon.",
       returns: "Full purchase and returns information will be available at launch.",
-      downloads: [
-        {
-          label: "Join the FS2 release list",
-          href: "mailto:researchdub@gmail.com?subject=FS2%20release%20list",
-        },
-      ],
+      downloads: [],
       images: [...product.images.slice(1), product.images[0]].filter(Boolean),
     },
   },

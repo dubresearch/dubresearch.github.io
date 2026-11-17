@@ -13,13 +13,15 @@ interface ProductTabsProps {
   product: Product;
 }
 
+// Set `hidden: false` to bring a tab back. Shipping and returns are hidden
+// while products are sold through retailers rather than directly.
 const tabItems = [
   { value: "description", label: "Description" },
   { value: "specs", label: "Specs" },
-  { value: "shipping", label: "Shipping" },
-  { value: "returns", label: "Returns" },
+  { value: "shipping", label: "Shipping", hidden: true },
+  { value: "returns", label: "Returns", hidden: true },
   { value: "downloads", label: "Downloads" },
-];
+].filter((tab) => !tab.hidden);
 
 export function ProductTabs({ product }: ProductTabsProps) {
   const [activeTab, setActiveTab] = useState("description");
@@ -130,6 +132,14 @@ function SpecsList({ specs }: { specs: string[] }) {
 }
 
 function DownloadsList({ downloads }: { downloads: Product["downloads"] }) {
+  if (downloads.length === 0) {
+    return (
+      <p className="text-foreground font-thin">
+        Coming soon.
+      </p>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-2">
       {downloads.map((download) => (

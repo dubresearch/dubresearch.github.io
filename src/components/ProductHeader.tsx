@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { ProductPurchaseLink } from "@/types/product";
@@ -10,6 +10,8 @@ interface ProductHeaderProps {
   purchaseLinks: ProductPurchaseLink[];
   actionLabel?: string;
   menuItemSuffix?: string;
+  /** Replaces the store menu, e.g. with a contact form. */
+  action?: ReactNode;
 }
 
 interface ShopRegionMenuProps {
@@ -126,6 +128,7 @@ export function ProductHeader({
   purchaseLinks,
   actionLabel,
   menuItemSuffix,
+  action,
 }: ProductHeaderProps) {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -136,11 +139,13 @@ export function ProductHeader({
       <div className="flex w-full md:w-auto md:justify-end">
         <div className="inline-flex items-center gap-4">
           <span className="text-sm text-muted-foreground">{price}</span>
-          <ShopRegionMenu
-            purchaseLinks={purchaseLinks}
-            label={actionLabel}
-            menuItemSuffix={menuItemSuffix}
-          />
+          {action ?? (
+            <ShopRegionMenu
+              purchaseLinks={purchaseLinks}
+              label={actionLabel}
+              menuItemSuffix={menuItemSuffix}
+            />
+          )}
         </div>
       </div>
     </div>

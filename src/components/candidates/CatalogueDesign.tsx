@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ProductMedia } from "@/components/ProductMedia";
 import { ProductHeader, ShopRegionMenu } from "@/components/ProductHeader";
 import { ProductTabs } from "@/components/ProductTabs";
+import { ContactDialog } from "@/components/ContactDialog";
 import { Footer } from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
 import { product } from "@/content/product";
@@ -13,6 +14,8 @@ type RangeProduct = {
   shortName: string;
   actionLabel?: string;
   menuItemSuffix?: string;
+  /** Sold directly: the buy button opens a contact form instead of store links. */
+  contactForm?: boolean;
   details: Product;
 };
 
@@ -27,17 +30,11 @@ const rangeProducts: RangeProduct[] = [
     id: "fs2",
     model: "FS2",
     shortName: "New machine",
-    actionLabel: "Get updates",
-    menuItemSuffix: "",
+    contactForm: true,
     details: {
       title: "FS2",
       price: "£189 / €227",
-      purchaseLinks: [
-        {
-          region: "Join the release list",
-          href: "mailto:researchdub@gmail.com?subject=FS2%20release%20list",
-        },
-      ],
+      purchaseLinks: [],
       description: [
         "The FS2 is an analog, stereo, multi-mode filter coupled with a spring reverb tank driver. This is designed to be an evolution of the passive altec filters, often paired with spring reverbs, used by many of the dub masters. The filters can be configured in stereo or mono (daisy chained) and filter types are low pass, band pass and high pass, with controls for cutoff and resonance.",
         "The filter section contains an LFO modulator which can be used to control the filter cutoff, with 6 waveforms to choose from, with controls for depth and rate.",
@@ -158,15 +155,22 @@ export function CatalogueDesign() {
                 purchaseLinks={activeProduct.details.purchaseLinks}
                 actionLabel={activeProduct.actionLabel}
                 menuItemSuffix={activeProduct.menuItemSuffix}
+                action={activeProduct.contactForm ? (
+                  <ContactDialog productName={activeProduct.details.title} />
+                ) : undefined}
               />
             </div>
             <ProductTabs product={activeProduct.details} />
-            <ShopRegionMenu
-              purchaseLinks={activeProduct.details.purchaseLinks}
-              label={activeProduct.actionLabel}
-              menuItemSuffix={activeProduct.menuItemSuffix}
-              mobile
-            />
+            {activeProduct.contactForm ? (
+              <ContactDialog productName={activeProduct.details.title} mobile />
+            ) : (
+              <ShopRegionMenu
+                purchaseLinks={activeProduct.details.purchaseLinks}
+                label={activeProduct.actionLabel}
+                menuItemSuffix={activeProduct.menuItemSuffix}
+                mobile
+              />
+            )}
           </div>
 
           <Separator className="mb-10 mt-10" />

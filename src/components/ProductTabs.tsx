@@ -56,7 +56,7 @@ export function ProductTabs({ product }: ProductTabsProps) {
               </AccordionTrigger>
               <AccordionContent className="px-0">
                 {tab.value === "description" && (
-                  <p className="text-foreground font-thin">
+                  <p className="text-foreground font-thin whitespace-pre-line">
                     {product.description}
                   </p>
                 )}
@@ -97,7 +97,7 @@ export function ProductTabs({ product }: ProductTabsProps) {
       </div>
 
       <TabsContent value="description" className="hidden md:block">
-        <p className="text-foreground font-thin">{product.description}</p>
+        <p className="text-foreground font-thin whitespace-pre-line">{product.description}</p>
       </TabsContent>
 
       <TabsContent value="specs" className="hidden md:block">

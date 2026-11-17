@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ProductMedia } from "@/components/ProductMedia";
 import { ProductHeader, ShopRegionMenu } from "@/components/ProductHeader";
 import { ProductTabs } from "@/components/ProductTabs";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { product } from "@/content/product";
 import type { Product } from "@/types/product";
 
 type RangeProduct = {
-  id: "sss1" | "dly1";
-  sequence: string;
+  id: "sss1" | "fs2";
   model: string;
   shortName: string;
-  status: "Available now" | "Coming soon";
   actionLabel?: string;
   menuItemSuffix?: string;
   details: Product;
@@ -24,44 +19,47 @@ type RangeProduct = {
 const rangeProducts: RangeProduct[] = [
   {
     id: "sss1",
-    sequence: "01",
     model: "SSS1",
     shortName: "Sound System Siren",
-    status: "Available now",
     details: product,
   },
   {
-    id: "dly1",
-    sequence: "02",
-    model: "DLY1",
-    shortName: "Dub Delay Unit",
-    status: "Coming soon",
+    id: "fs2",
+    model: "FS2",
+    shortName: "New machine",
     actionLabel: "Get updates",
     menuItemSuffix: "",
     details: {
-      title: "DLY1 'Dub Delay Unit'",
+      title: "FS2",
       price: "Coming soon",
       purchaseLinks: [
         {
           region: "Join the release list",
-          href: "mailto:researchdub@gmail.com?subject=DLY1%20release%20list",
+          href: "mailto:researchdub@gmail.com?subject=FS2%20release%20list",
         },
       ],
-      description:
-        "The DLY1 is a hands-on performance delay built for feedback rides, deep repeats and controlled chaos. This second machine is a placeholder concept for the prototype, showing how a new product can live in the existing Dub Research design without turning the site into a conventional catalogue.",
+      description: [
+        "The FS2 is an analog, stereo, multi-mode filter coupled with a spring reverb tank driver. This is designed to be an evolution of the passive altec filters, often paired with spring reverbs, used by many of the dub masters. The filters can be configured in stereo or mono (daisy chained) and filter types are low pass, band pass and high pass, with controls for cutoff and resonance.",
+        "The filter section contains an LFO modulator which can be used to control the filter cutoff, with 6 waveforms to choose from, with controls for depth and rate.",
+        "The spring reverb driver can be used to drive a wide range of spring reverb tanks, with controls for drive and dry/wet mix. The spring can either be configured in stereo “mix” or mono “full wet” modes. The USB-C power connector can also provide class compliant MIDI over usb, which provides control over all filter and modulation parameters (excluding spring controls).",
+      ].join("\n\n"),
       specs: [
-        "Tap and free delay time",
-        "Saturating feedback path",
-        "Stereo input and output",
-        "Saveable performance settings",
-        "USB-C powered",
+        "Analog 12db state variable filters",
+        "3 filter types",
+        "Stereo or mono configurations",
+        "6 modulation waveforms",
+        "Drives spring tanks of 8Ω to 800Ω",
+        "3.5mm stereo audio I/O",
+        "3.5mm mono spring tank I/O",
+        "MIDI over USB",
+        "USB-C powered (5V 1A)",
       ],
       shipping: "Launch timing and regional availability will be announced soon.",
       returns: "Full purchase and returns information will be available at launch.",
       downloads: [
         {
-          label: "Join the DLY1 release list",
-          href: "mailto:researchdub@gmail.com?subject=DLY1%20release%20list",
+          label: "Join the FS2 release list",
+          href: "mailto:researchdub@gmail.com?subject=FS2%20release%20list",
         },
       ],
       images: [...product.images.slice(1), product.images[0]].filter(Boolean),
@@ -70,73 +68,53 @@ const rangeProducts: RangeProduct[] = [
 ];
 
 function getInitialProductId(): RangeProduct["id"] {
-  return new URLSearchParams(window.location.search).get("product") === "dly1"
-    ? "dly1"
+  return new URLSearchParams(window.location.search).get("product") === "fs2"
+    ? "fs2"
     : "sss1";
 }
 
-export type ProductPickerVariant = "models" | "index" | "stepper";
-
-function ProductPicker({ activeProductId, onSelect, variant }: {
+function SignalPathProductPicker({ activeProductId, onSelect }: {
   activeProductId: RangeProduct["id"];
   onSelect: (productId: RangeProduct["id"]) => void;
-  variant: ProductPickerVariant;
 }) {
-  const activeIndex = rangeProducts.findIndex(({ id }) => id === activeProductId);
-  const activeProduct = rangeProducts[activeIndex] ?? rangeProducts[0];
-
-  if (variant === "stepper") {
-    const previousProduct = rangeProducts[(activeIndex - 1 + rangeProducts.length) % rangeProducts.length];
-    const nextProduct = rangeProducts[(activeIndex + 1) % rangeProducts.length];
-    return (
-      <nav aria-label="Choose a product" className="flex items-center justify-between border-y border-border py-3">
-        <Button variant="ghost" size="sm" onClick={() => onSelect(previousProduct.id)} className="px-0 text-muted-foreground">
-          <ArrowLeft data-icon="inline-start" />{previousProduct.model}
-        </Button>
-        <div className="text-center">
-          <p className="text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">Machine {activeProduct.sequence} / 02</p>
-          <p className="mt-1 text-sm text-foreground">{activeProduct.model} <span className="hidden text-muted-foreground sm:inline">'{activeProduct.shortName}'</span></p>
-        </div>
-        <Button variant="ghost" size="sm" onClick={() => onSelect(nextProduct.id)} className="px-0 text-muted-foreground">
-          {nextProduct.model}<ArrowRight data-icon="inline-end" />
-        </Button>
-      </nav>
-    );
-  }
-
   return (
-    <nav aria-label="Choose a product">
-      {variant === "index" && (
-        <div className="mb-3 flex items-center justify-between text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
-          <span>Product index</span><span>01—02</span>
-        </div>
-      )}
-      <ToggleGroup aria-label="Choose a product" value={[activeProductId]}
-        onValueChange={(value) => {
-          const productId = value[0] as RangeProduct["id"] | undefined;
-          if (productId) onSelect(productId);
-        }}
-        variant="default" spacing={variant === "models" ? 4 : 0}
-        className={variant === "models" ? "justify-center" : "w-full border-y border-border"}
-      >
-        {rangeProducts.map((rangeProduct) => (
-          <ToggleGroupItem key={rangeProduct.id} value={rangeProduct.id}
-            aria-label={`Show ${rangeProduct.model} ${rangeProduct.shortName}`}
-            className={variant === "models"
-              ? "h-auto rounded-none border-b border-transparent px-1 py-2 text-muted-foreground data-[state=on]:border-signal data-[state=on]:bg-transparent data-[state=on]:text-foreground"
-              : "h-auto flex-1 rounded-none border-r border-border px-4 py-3 last:border-r-0 data-[state=on]:bg-muted/60"}
-          >
-            <span className="text-[0.625rem] text-muted-foreground">{rangeProduct.sequence}</span>
-            <span>{rangeProduct.model}</span>
-            {variant === "index" && <span className="hidden text-muted-foreground sm:inline">'{rangeProduct.shortName}'</span>}
-          </ToggleGroupItem>
-        ))}
-      </ToggleGroup>
+    <nav aria-label="Choose a product" className="flex items-center gap-4">
+      <span className="shrink-0 text-[0.5625rem] uppercase tracking-[0.16em] text-muted-foreground">
+        Select product
+      </span>
+      <span aria-hidden="true" className="h-px min-w-4 flex-1 bg-border" />
+      <div role="group" aria-label="Choose a product" className="flex shrink-0 items-center gap-4 sm:gap-5">
+        {rangeProducts.map((rangeProduct) => {
+          const selected = rangeProduct.id === activeProductId;
+
+          return (
+            <button
+              key={rangeProduct.id}
+              type="button"
+              aria-pressed={selected}
+              aria-label={`Show ${rangeProduct.model} ${rangeProduct.shortName}`}
+              onClick={() => onSelect(rangeProduct.id)}
+              className="group flex min-h-11 items-center gap-2 py-2 text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-1 focus-visible:ring-foreground/70 aria-pressed:text-foreground sm:min-h-0"
+            >
+              <span aria-hidden="true" className="relative flex size-2.5 items-center justify-center">
+                <span className="absolute size-4 rounded-full bg-signal/0 blur-[3px] transition-colors group-aria-pressed:bg-signal/45" />
+                <span className="relative size-2 rounded-full border border-muted-foreground/70 bg-background transition-colors group-aria-pressed:border-signal group-aria-pressed:bg-signal" />
+              </span>
+              <span className="text-xs tracking-[0.12em]">{rangeProduct.model}</span>
+              {rangeProduct.id === "fs2" && (
+                <span className="border border-signal bg-transparent px-[3px] py-px text-[0.4375rem] font-bold leading-none tracking-[0.1em] text-signal">
+                  NEW
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
     </nav>
   );
 }
 
-export function CatalogueDesign({ pickerVariant = "models" }: { pickerVariant?: ProductPickerVariant }) {
+export function CatalogueDesign() {
   const [activeProductId, setActiveProductId] =
     useState<RangeProduct["id"]>(getInitialProductId);
   const activeIndex = rangeProducts.findIndex(
@@ -147,6 +125,7 @@ export function CatalogueDesign({ pickerVariant = "models" }: { pickerVariant?: 
   useEffect(() => {
     const url = new URL(window.location.href);
     url.searchParams.set("product", activeProductId);
+    url.searchParams.delete("selector");
     window.history.replaceState({}, "", url);
   }, [activeProductId]);
 
@@ -171,8 +150,8 @@ export function CatalogueDesign({ pickerVariant = "models" }: { pickerVariant?: 
         </header>
 
         <main>
-          <section className="mb-8 md:mb-10">
-            <ProductPicker activeProductId={activeProductId} onSelect={showProduct} variant={pickerVariant} />
+          <section className="mb-4">
+            <SignalPathProductPicker activeProductId={activeProductId} onSelect={showProduct} />
           </section>
 
           <div id="product-detail" key={activeProduct.id} className="candidate-enter scroll-mt-16">

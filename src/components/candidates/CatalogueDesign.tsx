@@ -6,6 +6,7 @@ import { ContactDialog } from "@/components/ContactDialog";
 import { Footer } from "@/components/Footer";
 import { Separator } from "@/components/ui/separator";
 import { product } from "@/content/product";
+import fs2FrontPanel from "@/assets/products/fs2/fs2-front-panel.webp";
 import type { Product } from "@/types/product";
 
 type RangeProduct = {
@@ -54,7 +55,13 @@ const rangeProducts: RangeProduct[] = [
       shipping: "Launch timing and regional availability will be announced soon.",
       returns: "Full purchase and returns information will be available at launch.",
       downloads: [],
-      images: [...product.images.slice(1), product.images[0]].filter(Boolean),
+      images: [
+        {
+          url: fs2FrontPanel,
+          urlLarge: fs2FrontPanel,
+          altText: "FS2 front panel",
+        },
+      ],
     },
   },
 ];

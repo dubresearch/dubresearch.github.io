@@ -29,15 +29,15 @@ const rangeProducts: RangeProduct[] = [
   },
   {
     id: "fs2",
-    model: "FS2",
+    model: "FS-2",
     shortName: "New machine",
     contactForm: true,
     details: {
-      title: "FS2",
+      title: "FS-2",
       price: "£189 / €227",
       purchaseLinks: [],
       description: [
-        "The FS2 is an analog, stereo, multi-mode filter coupled with a spring reverb tank driver. This is designed to be an evolution of the passive altec filters, often paired with spring reverbs, used by many of the dub masters. The filters can be configured in stereo or mono (daisy chained) and filter types are low pass, band pass and high pass, with controls for cutoff and resonance.",
+        "The FS-2 is an analog, stereo, multi-mode filter coupled with a spring reverb tank driver. This is designed to be an evolution of the passive altec filters, often paired with spring reverbs, used by many of the dub masters. The filters can be configured in stereo or mono (daisy chained) and filter types are low pass, band pass and high pass, with controls for cutoff and resonance.",
         "The filter section contains an LFO modulator which can be used to control the filter cutoff, with 6 waveforms to choose from, with controls for depth and rate.",
         "The spring reverb driver can be used to drive a wide range of spring reverb tanks, with controls for drive and dry/wet mix. The spring can either be configured in stereo “mix” or mono “full wet” modes. The USB-C power connector can also provide class compliant MIDI over usb, which provides control over all filter and modulation parameters (excluding spring controls).",
       ].join("\n\n"),
@@ -54,12 +54,17 @@ const rangeProducts: RangeProduct[] = [
       ],
       shipping: "Launch timing and regional availability will be announced soon.",
       returns: "Full purchase and returns information will be available at launch.",
-      downloads: [],
+      downloads: [
+        {
+          label: "Download User Manual",
+          href: "/FS2_MANUAL_V1.pdf",
+        },
+      ],
       images: [
         {
           url: fs2FrontPanel,
           urlLarge: fs2FrontPanel,
-          altText: "FS2 front panel",
+          altText: "FS-2 front panel",
         },
       ],
     },
